@@ -20,8 +20,8 @@ def handle_notification(handle, data):
 def discover_ble_device():
     scanner = Scanner()
 
-    # Scan indefinitely
-    devices = scanner.scan()
+    # Scan a very long time
+    devices = scanner.scan(60 * 60 * 24)
 
     for dev in devices:
         print(dev.addr)
