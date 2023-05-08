@@ -46,11 +46,14 @@ def discover_ble_device():
 
 # Define a function to read data from the BLE characteristic
 def read_ble_characteristic(peripheral, characteristic):
-    while True:
-        value_bytes = characteristic.read()
-        value = int.from_bytes(value_bytes, 'big')
-        print(f'Read value: {value}')
-        time.sleep(1.0)
+    try:
+        while True:
+            value_bytes = characteristic.read()
+            value = int.from_bytes(value_bytes, 'big')
+            print(f'Read value: {value}')
+            time.sleep(1.0)
+    except KeyboardInterrupt:
+        print('KeyboardInterrupt: Stopping the function')
 
 
 def main():
@@ -62,6 +65,7 @@ def main():
 
     # Disconnect from the BLE device
     peripheral.disconnect()
+    print('shutdown')
 
 
 if __name__ == '__main__':
