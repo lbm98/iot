@@ -1,4 +1,5 @@
 from network import Bluetooth
+from machine import Timer
 
 # Define the UUID of the service you want to read from
 SERVICE_UUID = 0x1000
@@ -37,6 +38,13 @@ bluetooth.advertise(True)
 srv1 = bluetooth.service(uuid=SERVICE_UUID, isprimary=True, nbr_chars=1)
 chr1 = srv1.characteristic(uuid=CHARACTERISTIC_UUID, value='read_from_here')
 
-chr1.callback(trigger=Bluetooth.CHAR_WRITE_EVENT | Bluetooth.CHAR_READ_EVENT, handler=char1_cb_handler)
+# chr1.callback(trigger=Bluetooth.CHAR_WRITE_EVENT | Bluetooth.CHAR_READ_EVENT, handler=char1_cb_handler)
 
 print('Start BLE service')
+
+
+def update_handler():
+    chr1.value(100)
+
+
+update_alarm = Timer.Alarm(update_handler, 1, periodic=True)

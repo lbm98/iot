@@ -1,5 +1,5 @@
 import time
-from bluepy.btle import Scanner, Peripheral, BTLEDisconnectError
+from bluepy.btle import Scanner, Peripheral, BTLEDisconnectError, DefaultDelegate
 
 # Define the MAC address of the BLE device you want to connect to
 DEVICE_MAC_ADDRESS = 'F0:08:D1:CC:3E:3A'
@@ -24,7 +24,6 @@ def discover_ble_device():
         devices = scanner.scan(2)
 
         for dev in devices:
-            print(dev.addr)
 
             # Compare the MAC addresses in a case-insensitive way,
             if dev.addr.lower() == DEVICE_MAC_ADDRESS.lower():
@@ -32,6 +31,9 @@ def discover_ble_device():
                 print(f'Device {dev.addr} found!')
 
                 peripheral = Peripheral(dev.addr)
+
+                peripheral.setDelegate(MyDelegate())
+
                 services = peripheral.getServices()
                 for service in services:
                     if service.uuid == SERVICE_UUID:
@@ -47,14 +49,21 @@ def discover_ble_device():
                                 return peripheral, characteristic
 
 
+class MyDelegate(DefaultDelegate):
+    def __init__(self):
+        DefaultDelegate.__init__(self)
+
+    def handleNotification(self, cHandle, data):
+        value = int.from_bytes(data, 'big')
+        print(f'Read value: {value}')
+
+
 # Define a function to read data from the BLE characteristic
 def read_ble_characteristic(peripheral, characteristic):
     try:
         while True:
-            value_bytes = characteristic.read()
-            value = int.from_bytes(value_bytes, 'big')
-            print(f'Read value: {value}')
-            time.sleep(1.0)
+            peripheral.waitForNotifications(1)
+            # time.sleep(1.0)
     except KeyboardInterrupt:
         reconnect = False
     except BTLEDisconnectError:
