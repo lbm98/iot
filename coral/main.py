@@ -22,7 +22,10 @@ def discover_ble_device():
     devices = scanner.scan(2.0)
     for dev in devices:
         print(dev.addr)
-        if dev.addr == DEVICE_MAC_ADDRESS:
+
+        # Compare the MAC addresses in a case-insensitive way,
+        if dev.addr.lower() == DEVICE_MAC_ADDRESS.lower():
+
             print(f'Device {dev.addr} found!')
             peripheral = Peripheral(dev.addr)
             services = peripheral.getServices()
