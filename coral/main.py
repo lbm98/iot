@@ -57,7 +57,7 @@ def read_ble_characteristic(peripheral, characteristic):
             value_bytes = characteristic.read()
             value = int.from_bytes(value_bytes, 'big')
             print(f'Read value: {value}')
-            time.sleep(1.0)
+            time.sleep(CONNECTION_INTERVAL)
     except KeyboardInterrupt:
         reconnect = False
     except BTLEDisconnectError:
