@@ -21,7 +21,7 @@ def discover_ble_device():
     scanner = Scanner()
 
     # Scan indefinitely
-    devices = scanner.scan(-1)
+    devices = scanner.scan()
 
     for dev in devices:
         print(dev.addr)
