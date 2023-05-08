@@ -48,6 +48,7 @@ def discover_ble_device():
 def read_ble_characteristic(peripheral, characteristic):
     while True:
         value = characteristic.read()
+        print(type(value))
         print(f'Read value: {value}')
         time.sleep(1.0)
 
