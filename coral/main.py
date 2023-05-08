@@ -30,6 +30,9 @@ def discover_ble_device():
             peripheral = Peripheral(dev.addr)
             services = peripheral.getServices()
             for service in services:
+
+                print(service.uuid)
+
                 if str(service.uuid) == SERVICE_UUID.decode():
                     print(f'Service {service.uuid} found!')
                     characteristics = service.getCharacteristics()
