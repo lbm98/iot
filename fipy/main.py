@@ -45,6 +45,7 @@ print('Start BLE service')
 
 def update_handler(handler):
     chr1.value(100)
+    print("transmitted :", 100)
 
 
 update_alarm = Timer.Alarm(update_handler, 1, periodic=True)
