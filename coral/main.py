@@ -21,7 +21,7 @@ def discover_ble_device():
     scanner = Scanner()
     devices = scanner.scan(2.0)
     for dev in devices:
-        print('enter')
+        print(dev.addr)
         if dev.addr == DEVICE_MAC_ADDRESS:
             print(f'Device {dev.addr} found!')
             peripheral = Peripheral(dev.addr)
