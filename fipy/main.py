@@ -1,10 +1,10 @@
 from network import Bluetooth
 
 # Define the UUID of the service you want to read from
-SERVICE_UUID = b'1234567890123456'
+SERVICE_UUID = 0x1000
 
 # Define the UUID of the characteristic you want to read from
-CHARACTERISTIC_UUID = b'ab34567890123456'
+CHARACTERISTIC_UUID = 0x2000
 
 
 def conn_cb(bt_o):
