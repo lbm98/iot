@@ -24,7 +24,7 @@ def discover_ble_device():
         print(dev.addr)
 
         # Compare the MAC addresses in a case-insensitive way,
-        if dev.addr.lower() == DEVICE_MAC_ADDRESS.lower():
+        if dev.addr.lower() == DEVICE_MAC_ADDRESS.decode().lower():
 
             print(f'Device {dev.addr} found!')
             peripheral = Peripheral(dev.addr)
