@@ -20,31 +20,31 @@ def handle_notification(handle, data):
 def discover_ble_device():
     scanner = Scanner()
 
-    # Scan a very long time
-    devices = scanner.scan(60 * 60 * 24)
+    while True:
+        devices = scanner.scan(2)
 
-    for dev in devices:
-        print(dev.addr)
+        for dev in devices:
+            print(dev.addr)
 
-        # Compare the MAC addresses in a case-insensitive way,
-        if dev.addr.lower() == DEVICE_MAC_ADDRESS.lower():
+            # Compare the MAC addresses in a case-insensitive way,
+            if dev.addr.lower() == DEVICE_MAC_ADDRESS.lower():
 
-            print(f'Device {dev.addr} found!')
+                print(f'Device {dev.addr} found!')
 
-            peripheral = Peripheral(dev.addr)
-            services = peripheral.getServices()
-            for service in services:
-                if service.uuid == SERVICE_UUID:
+                peripheral = Peripheral(dev.addr)
+                services = peripheral.getServices()
+                for service in services:
+                    if service.uuid == SERVICE_UUID:
 
-                    print(f'Service {service.uuid} found!')
+                        print(f'Service {service.uuid} found!')
 
-                    characteristics = service.getCharacteristics()
-                    for characteristic in characteristics:
-                        if characteristic.uuid == CHARACTERISTIC_UUID:
+                        characteristics = service.getCharacteristics()
+                        for characteristic in characteristics:
+                            if characteristic.uuid == CHARACTERISTIC_UUID:
 
-                            print(f'Characteristic {characteristic.uuid} found!')
+                                print(f'Characteristic {characteristic.uuid} found!')
 
-                            return peripheral, characteristic
+                                return peripheral, characteristic
 
 
 # Define a function to read data from the BLE characteristic
