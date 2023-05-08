@@ -2,13 +2,13 @@ import time
 from bluepy.btle import Scanner, Peripheral
 
 # Define the MAC address of the BLE device you want to connect to
-DEVICE_MAC_ADDRESS = 'F0:08:D1:CC:3E:3A'
+DEVICE_MAC_ADDRESS = b'F0:08:D1:CC:3E:3A'
 
 # Define the UUID of the service you want to read from
-SERVICE_UUID = '0000180f-0000-1000-8000-00805f9b34fb'
+SERVICE_UUID = b'1234567890123456'
 
 # Define the UUID of the characteristic you want to read from
-CHARACTERISTIC_UUID = '00002a19-0000-1000-8000-00805f9b34fb'
+CHARACTERISTIC_UUID = b'ab34567890123456'
 
 
 # Define a function to handle BLE notifications
