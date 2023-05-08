@@ -1,5 +1,8 @@
 from network import Bluetooth
 
+# Connection interval in seconds
+CONNECTION_INTERVAL = 1
+
 # Define the UUID of the service you want to read from
 SERVICE_UUID = 0x1000
 

@@ -1,6 +1,9 @@
 import time
 from bluepy.btle import Scanner, Peripheral, BTLEDisconnectError
 
+# Connection interval in seconds
+CONNECTION_INTERVAL = 1
+
 # Define the MAC address of the BLE device you want to connect to
 DEVICE_MAC_ADDRESS = 'F0:08:D1:CC:3E:3A'
 
