@@ -43,7 +43,7 @@ chr1 = srv1.characteristic(uuid=CHARACTERISTIC_UUID, value='read_from_here')
 print('Start BLE service')
 
 
-def update_handler():
+def update_handler(handler):
     chr1.value(100)
 
 
