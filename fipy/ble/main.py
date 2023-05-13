@@ -1,13 +1,24 @@
 from network import Bluetooth
+import pycom
+
+from SI7006A20 import SI7006A20
+from pycoproc_2 import Pycoproc
 
 # Connection interval in seconds
 CONNECTION_INTERVAL = 1
 
-# Define the UUID of the service you want to read from
+# The UUID of the service
 SERVICE_UUID = 0x1000
 
-# Define the UUID of the characteristic you want to read from
+# The characteristic of the service
 CHARACTERISTIC_UUID = 0x2000
+
+# Disable heartbeat LED to save power
+pycom.heartbeat(False)
+
+# Initialise the DHT temperature and humidity sensor
+py = Pycoproc()
+dht = SI7006A20(py)
 
 
 def conn_cb(bt_o):
@@ -19,8 +30,9 @@ def conn_cb(bt_o):
 
 
 def chr1_cb_handler(chr, data):
-    chr.value(100)
-    print("transmitted :", 100)
+    humidity = dht.humidity()
+    chr.value(str(humidity))
+    print("transmitted :", humidity)
 
 
 bluetooth = Bluetooth()

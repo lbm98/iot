@@ -63,7 +63,7 @@ def read_ble_characteristic(peripheral, characteristic):
     try:
         while True:
             value_bytes = characteristic.read()
-            value = int.from_bytes(value_bytes, 'big')
+            value = value_bytes.decode()
 
             print(f'Read value: {value}')
             requests.post(
