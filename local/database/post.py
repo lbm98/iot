@@ -1,6 +1,13 @@
 import requests
 
-TARGET_URL = 'http://127.0.0.1:8080/sensor'
+
+# HOST = '127.0.0.1'
+HOST = '192.168.1.28'  # Change as needed
+
+PORT = 8080
+PATH = '/sensor'
+
+TARGET_URL = f'http://{HOST}:{PORT}{PATH}'
 
 
 def main():
