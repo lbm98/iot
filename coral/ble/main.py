@@ -1,4 +1,5 @@
 import time
+import requests
 from bluepy.btle import Scanner, Peripheral, BTLEDisconnectError
 
 # Connection interval in seconds
@@ -56,7 +57,11 @@ def read_ble_characteristic(peripheral, characteristic):
         while True:
             value_bytes = characteristic.read()
             value = int.from_bytes(value_bytes, 'big')
+
             print(f'Read value: {value}')
+            requests.post()
+
+
             time.sleep(CONNECTION_INTERVAL)
     except KeyboardInterrupt:
         reconnect = False

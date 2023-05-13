@@ -12,9 +12,6 @@ def post_sensor_data():
     sensor_data = request.json
     humidity = sensor_data['humidity']
 
-    with open('data.txt', 'a') as fh:
-        fh.write(f'{humidity}\n')
-
     insert_data(
         connection=conn,
         humidity=humidity
@@ -24,4 +21,4 @@ def post_sensor_data():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=8080)

@@ -1,7 +1,8 @@
+import time
 import mysql.connector
 from mysql.connector import Error
 
-HOST_NAME = 'localhost'
+HOST_NAME = 'db'
 PORT = '3306'
 USER_NAME = 'root'
 USER_PASSWORD = 'iot'
@@ -12,23 +13,26 @@ TABLE_NAME = 'sensor'
 def create_connection():
     """
     Create a connection to a MySQL server.
+
     Note that MySQL is a server-based DBMS,
     so we first connect to a server,
     and then we create a database.
-    """
-    try:
-        connection = mysql.connector.connect(
-            host=HOST_NAME,
-            port=PORT,
-            user=USER_NAME,
-            passwd=USER_PASSWORD
-        )
-        print("Connecting to MySQL success")
-    except Error as e:
-        print(f"Connecting to MySQL fail: {e}")
-        exit(1)
 
-    return connection
+    This function blocks until a connection is made.
+    """
+    while True:
+        try:
+            connection = mysql.connector.connect(
+                host=HOST_NAME,
+                port=PORT,
+                user=USER_NAME,
+                passwd=USER_PASSWORD
+            )
+            print("Connecting to MySQL success")
+            return connection
+        except Error as e:
+            print(f"Connecting to MySQL fail: {e}")
+            time.sleep(1)
 
 
 def create_database_if_not_exists(connection):
