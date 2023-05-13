@@ -2,25 +2,33 @@ import time
 import requests
 from bluepy.btle import Scanner, Peripheral, BTLEDisconnectError
 
-# Connection interval in seconds
+# The connection interval in seconds
 CONNECTION_INTERVAL = 1
 
-# Define the MAC address of the BLE device you want to connect to
+# The MAC address of the BLE device
 DEVICE_MAC_ADDRESS = 'F0:08:D1:CC:3E:3A'
 
-# Define the UUID of the service you want to read from
+# The UUID of the service
 SERVICE_UUID = 0x1000
 
-# Define the UUID of the characteristic you want to read from
+# The UUID of the characteristic
 CHARACTERISTIC_UUID = 0x2000
 
+# The coral collects data from the sensors
+# and will send it to the cloud.
+# Here we define parameters related to the cloud connection.
+CLOUD_HOST = '192.168.1.28'  # Could change because of DHCP
+CLOUD_PORT = 8080
+CLOUD_PATH = '/sensor'
+COULD_URL = f'http://{CLOUD_HOST}:{CLOUD_PORT}{CLOUD_PATH}'
 
-# Define a function to handle BLE notifications
+
+# Handle BLE notifications
 def handle_notification(handle, data):
     print(f'Received notification from handle {handle}: {data}')
 
 
-# Define a function to discover services and characteristics of the BLE device
+# Discover services and characteristics of the BLE device
 def discover_ble_device():
     scanner = Scanner()
 
@@ -45,13 +53,12 @@ def discover_ble_device():
                         characteristics = service.getCharacteristics()
                         for characteristic in characteristics:
                             if characteristic.uuid == CHARACTERISTIC_UUID:
-
                                 print(f'Characteristic {characteristic.uuid} found!')
 
                                 return peripheral, characteristic
 
 
-# Define a function to read data from the BLE characteristic
+# Read data from the BLE characteristic
 def read_ble_characteristic(peripheral, characteristic):
     try:
         while True:
@@ -59,8 +66,12 @@ def read_ble_characteristic(peripheral, characteristic):
             value = int.from_bytes(value_bytes, 'big')
 
             print(f'Read value: {value}')
-            requests.post()
-
+            requests.post(
+                url=COULD_URL,
+                json={
+                    'humidity': value
+                }
+            )
 
             time.sleep(CONNECTION_INTERVAL)
     except KeyboardInterrupt:
@@ -72,7 +83,6 @@ def read_ble_characteristic(peripheral, characteristic):
 
 
 def main():
-
     while True:
         # Discover the BLE device and its characteristics
         peripheral, characteristic = discover_ble_device()
