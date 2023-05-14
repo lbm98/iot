@@ -6,7 +6,7 @@ from bluepy.btle import Scanner, Peripheral, BTLEDisconnectError
 # We want to create an IP server on this device
 # Here, we define the parameters related to the IP connection
 
-HOST = ''  # The IP address of this device, so leave empty
+HOST = '192.168.1.36'  # The IP address of the ethernet interface
 PORT = 8090  # The IP port of the application
 
 # We want to poll a BLE device for data
@@ -20,7 +20,7 @@ CHARACTERISTIC_UUID = 0x2000  # The UUID of the characteristic
 
 def listen_on_ip_socket():
     # Create a socket object using the following options:
-    # - socket.AF_INET: For use with Internet protocols (WiFi, LTE, Ethernet)
+    # - socket.AF_INET: For use with IP
     # - socket.SOCK_STREAM: Creates a stream socket (INET socket only, UDP protocol only)
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -31,12 +31,15 @@ def listen_on_ip_socket():
     # Accept maximum 1 connection at the same time
     sock.listen(1)
 
+    print(f"Listening on {HOST}:{PORT}")
+
 
 def discover_ble_characteristic():
     scanner = Scanner()
 
     # Block until we find the correct characteristic
     while True:
+        print('Trying to find BLE device')
         devices = scanner.scan(2)
 
         # Try to find the correct device
@@ -66,7 +69,7 @@ def read_ble_characteristic(characteristic):
         value_bytes = characteristic.read()
         value = value_bytes.decode()
 
-        print(f'Read value: {value}')
+        print(f'Read value from BLE: {value}')
 
         # requests.post(
         #     url=COULD_URL,
