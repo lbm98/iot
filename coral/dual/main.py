@@ -90,6 +90,7 @@ def main():
         success = read_ble_characteristic(char)
         if not success:
             print('Failed to get data')
+        time.sleep(CONNECTION_INTERVAL)
 
 
 if __name__ == '__main__':
