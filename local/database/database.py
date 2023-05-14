@@ -46,7 +46,7 @@ def create_database_if_not_exists(connection):
         cursor.execute(f"""
         CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            humidity INT
+            humidity DOUBLE
         )
         """)
 
@@ -85,4 +85,4 @@ def insert_data(connection, humidity):
 if __name__ == '__main__':
     conn = create_connection()
     create_database_if_not_exists(conn)
-    insert_data(conn)
+    insert_data(conn, 30.5)

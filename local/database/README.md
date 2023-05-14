@@ -69,6 +69,11 @@ Run to check the sensor data
 docker compose exec db mysql -uroot -piot -e "USE iot_db; SELECT * FROM  sensor"
 ```
 
+Run to drop the sensor database
+```bash
+docker compose exec db mysql -uroot -piot -e "DROP DATABASE iot_db"
+```
+
 Run to bring the containers down
 ```bash
 docker compose stop
