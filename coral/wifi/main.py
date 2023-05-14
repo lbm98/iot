@@ -28,6 +28,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     # Accept maximum 1 connection at the same time
     s.listen(1)
 
+    print('Listening for incoming connections')
+
     # Define a signal handler to catch the SIGINT signal
     def signal_handler(sig, frame):
         print('Stopping server...')
