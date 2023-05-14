@@ -80,6 +80,7 @@ def read_ble_characteristic(characteristic):
 
         success = True
     except BTLEDisconnectError:
+        print('here')
         success = False
 
     return success
