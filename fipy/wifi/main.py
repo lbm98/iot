@@ -23,7 +23,7 @@ from pycoproc_2 import Pycoproc
 # - https://docs.pycom.io/firmwareapi/micropython/utime/
 # - https://github.com/micropython/micropython-lib/blob/master/python-ecosys/urequests/urequests.py
 
-SERVER = '192.168.1.28'  # Replace with the server's IP address
+SERVER = '192.168.1.36'  # Replace with the server's IP address
 PORT = 8090  # Replace with the server's IP port
 SSID = 'AP200'  # Replace with the name of your WiFi network
 WPA2_KEY = 'LarsWard'  # Replace with the password of your WiFi network
