@@ -1,2 +1,3 @@
 mendel-development-tool
 requests
+bluepy

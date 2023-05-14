@@ -1,7 +1,7 @@
 import time
 import socket
 import requests
-from bluepy.btle import Scanner, Peripheral, BTLEDisconnectError
+from bluepy.btle import Scanner, Peripheral, BTLEException
 
 # We want to create an IP server on this device
 # Here, we define the parameters related to the IP connection
@@ -79,8 +79,7 @@ def read_ble_characteristic(characteristic):
         # )
 
         success = True
-    except BTLEDisconnectError:
-        print('here')
+    except BTLEException:
         success = False
 
     return success
