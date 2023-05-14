@@ -10,7 +10,7 @@ from datetime import datetime
 # - https://docs.python.org/3/library/socket.html
 # - https://docs.python.org/3/library/socket.html#example
 
-HOST = ''  # Set the server's IP address
+HOST = '192.168.1.28'  # Set the server's IP address
 PORT = 8090  # Set the server's IP port
 
 # Store data received from clients
