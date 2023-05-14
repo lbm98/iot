@@ -10,8 +10,10 @@ from datetime import datetime
 # - https://docs.python.org/3/library/socket.html
 # - https://docs.python.org/3/library/socket.html#example
 
-HOST = ''  # Set the server's IP address
-PORT = 8090  # Set the server's IP port
+# We want to create a server on the device running this script
+# Here, we define the parameters of this server
+HOST = ''  # The IP address of the device itself, so leave empty
+PORT = 8090  # The port of the application
 
 # Store data received from clients
 buffer = []
