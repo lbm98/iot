@@ -46,9 +46,9 @@ dht = SI7006A20(py)
 def conn_cb(bt_o):
     events = bt_o.events()
     if events & Bluetooth.CLIENT_CONNECTED:
-        print("Client connected")
+        print("BLE client connected")
     elif events & Bluetooth.CLIENT_DISCONNECTED:
-        print("Client disconnected")
+        print("BLE client disconnected")
 
 
 def chr1_cb_handler(chr, data):
@@ -56,7 +56,7 @@ def chr1_cb_handler(chr, data):
 
     humidity = dht.humidity()
     chr.value(str(humidity))
-    print("transmitted :", humidity)
+    print("BLE transmitted :", humidity)
 
     last_read_event_time = time.time()
 
@@ -75,11 +75,11 @@ def use_wifi():
         print('Connected to server')
 
         # Construct a message containing the humidity
-        message = str(dht.humidity())
+        humidity = str(dht.humidity())
 
-        sock.send(message.encode())
+        sock.send(humidity.encode())
 
-        print('Message sent')
+        print("WIFI transmitted :", humidity)
     except OSError as e:
         sock.close()
         raise
@@ -102,7 +102,7 @@ print('BLE service started')
 
 while True:
     if time.time() - last_read_event_time > CONNECTION_INTERVAL + 0.3:
-        print("use WIFI")
+        print("BLE failed, use WIFI")
         use_wifi()
         last_read_event_time = time.time()
 

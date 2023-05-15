@@ -74,7 +74,7 @@ def main():
     count = 0
     while True:
         # Sometimes, the BLE channel fails,
-        if count % 10 == 0:
+        if count % 1000 == 0:
             pass
         else:
             # Try to poll the BLE device for data
