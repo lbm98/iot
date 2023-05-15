@@ -1,4 +1,5 @@
 import time
+import socket
 import requests
 from bluepy.btle import Scanner, Peripheral, BTLEException
 
@@ -67,11 +68,17 @@ def read_ble_characteristic(characteristic):
 
     return success
 
-
 def main():
     char = discover_ble_characteristic()
 
+    count = 0
     while True:
+
+        # 1 in 5 packets, the BLE channel fails,
+        if count % 5 == 0:
+            time.sleep(CONNECTION_INTERVAL)
+        count += 1
+
         # Try to poll the BLE device for data
         success = read_ble_characteristic(char)
         if not success:
