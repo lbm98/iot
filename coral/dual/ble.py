@@ -1,5 +1,4 @@
 import time
-import socket
 import requests
 from bluepy.btle import Scanner, Peripheral, BTLEException
 
@@ -16,22 +15,6 @@ CONNECTION_INTERVAL = 1  # We poll the device for data each CONNECTION_INTERVAL
 DEVICE_MAC_ADDRESS = 'F0:08:D1:CC:3E:3A'  # The MAC address of the BLE device
 SERVICE_UUID = 0x1000  # The UUID of the service
 CHARACTERISTIC_UUID = 0x2000  # The UUID of the characteristic
-
-
-def listen_on_ip_socket():
-    # Create a socket object using the following options:
-    # - socket.AF_INET: For use with IP
-    # - socket.SOCK_STREAM: Creates a stream socket (INET socket only, UDP protocol only)
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    # Bind the socket to a specific address and port
-    sock.bind((HOST, PORT))
-
-    # Listen for incoming connections
-    # Accept maximum 1 connection at the same time
-    sock.listen(1)
-
-    print(f"Listening on {HOST}:{PORT}")
 
 
 def discover_ble_characteristic():
@@ -86,13 +69,14 @@ def read_ble_characteristic(characteristic):
 
 
 def main():
-    sock = listen_on_ip_socket()
     char = discover_ble_characteristic()
 
     while True:
+        # Try to poll the BLE device for data
         success = read_ble_characteristic(char)
         if not success:
-            print('Failed to get data')
+            print('Failed to poll BLE device')
+
         time.sleep(CONNECTION_INTERVAL)
 
 
