@@ -20,7 +20,7 @@ Close the IP server
 pkill -f "venv/bin/python wifi.py"
 ```
 
-Run the main script
+Run the BLE functions
 ```bash
-sudo venv/bin/python main.py
+sudo venv/bin/python ble.py
 ```
