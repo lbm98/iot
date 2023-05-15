@@ -1,6 +1,9 @@
 import socket
 import signal
 from datetime import datetime
+import requests
+
+from config import CLOUD_URL
 
 # General considerations
 # - avoid verbose message formats like json and xml
@@ -15,8 +18,6 @@ from datetime import datetime
 HOST = '192.168.1.36'  # The IP address of the ethernet interface
 PORT = 8090  # The IP port of the application
 
-# Store data received from clients
-buffer = []
 
 # Create a socket object with options:
 # - socket.AF_INET: For use with Internet protocols (WiFi, LTE, Ethernet)
@@ -60,8 +61,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
             print(f'Data received from WIFI: {data_str}')
 
-            # Store the received data
-            buffer.append(data_str)
+            requests.post(
+                url=CLOUD_URL,
+                json={
+                    'humidity': data_str
+                }
+            )
 
         # Close the connection
         conn.close()

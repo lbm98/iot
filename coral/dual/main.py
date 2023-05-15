@@ -3,6 +3,8 @@ import socket
 import requests
 from bluepy.btle import Scanner, Peripheral, BTLEException
 
+from config import CLOUD_URL
+
 # We want to create an IP server on this device
 # Here, we define the parameters related to the IP connection
 
@@ -55,12 +57,12 @@ def read_ble_characteristic(characteristic):
 
         print(f'Data received from BLE: {value}')
 
-        # requests.post(
-        #     url=COULD_URL,
-        #     json={
-        #         'humidity': value
-        #     }
-        # )
+        requests.post(
+            url=CLOUD_URL,
+            json={
+                'humidity': value
+            }
+        )
 
         success = True
     except BTLEException:
