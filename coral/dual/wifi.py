@@ -45,7 +45,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         # Wait for a client to connect
         conn, addr = s.accept()
 
-        print(f'Client connected from {addr[0]}:{addr[1]}')
+        # print(f'Client connected from {addr[0]}:{addr[1]}')
 
         # Keep the connection open
         while True:
@@ -58,8 +58,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
             data_str = data.decode()
 
-            now = datetime.now()
-            print(f'{now}: Data received: {data_str}')
+            print(f'Data received from WIFI: {data_str}')
 
             # Store the received data
             buffer.append(data_str)

@@ -53,7 +53,7 @@ def read_ble_characteristic(characteristic):
         value_bytes = characteristic.read()
         value = value_bytes.decode()
 
-        print(f'Read value from BLE: {value}')
+        print(f'Data received from BLE: {value}')
 
         # requests.post(
         #     url=COULD_URL,
@@ -74,17 +74,16 @@ def main():
     count = 0
     while True:
         # Sometimes, the BLE channel fails,
-        if count % 1000 == 0:
-            pass
+        if count % 5 == 0:
+            time.sleep(5.0)
         else:
             # Try to poll the BLE device for data
             success = read_ble_characteristic(char)
             if not success:
                 print('Failed to poll BLE device')
+            time.sleep(CONNECTION_INTERVAL)
 
         count += 1
-
-        time.sleep(CONNECTION_INTERVAL)
 
 
 if __name__ == '__main__':

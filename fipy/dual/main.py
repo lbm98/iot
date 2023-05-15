@@ -101,7 +101,7 @@ chr1.callback(trigger=Bluetooth.CHAR_READ_EVENT, handler=chr1_cb_handler)
 print('BLE service started')
 
 while True:
-    if time.time() - last_read_event_time > CONNECTION_INTERVAL + 0.3:
+    if time.time() - last_read_event_time > 3.0:
         print("BLE failed, use WIFI")
         use_wifi()
         last_read_event_time = time.time()
