@@ -75,7 +75,7 @@ def main():
     while True:
         # 1 in 5 packets, the BLE channel fails,
         if count % 5 == 0:
-            time.sleep(0.5)
+            time.sleep(4)
         else:
             # Try to poll the BLE device for data
             success = read_ble_characteristic(char)
