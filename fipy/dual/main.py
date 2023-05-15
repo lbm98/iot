@@ -3,6 +3,7 @@ import pycom
 import time
 import usocket
 
+from network import WLAN
 from SI7006A20 import SI7006A20
 from pycoproc_2 import Pycoproc
 
@@ -15,11 +16,24 @@ SERVICE_UUID = 0x1000
 # The characteristic of the service
 CHARACTERISTIC_UUID = 0x2000
 
-SERVER = '192.168.1.36'  # Replace with the server's IP address (coral)
-PORT = 8090  # Replace with the server's IP port (coral)
+SERVER = '192.168.1.36'  # Replace with the server's IP address
+PORT = 8090  # Replace with the server's IP port
+SSID = 'AP200'  # Replace with the name of your WiFi network
+WPA2_KEY = 'LarsWard'  # Replace with the password of your WiFi network
+
+# Create WLAN interface as a station
+wlan = WLAN(mode=WLAN.STA)
 
 # Disable heartbeat LED to save power
 pycom.heartbeat(False)
+
+# Setup network connection
+wlan.connect(ssid=SSID, auth=(WLAN.WPA2, WPA2_KEY))
+
+while not wlan.isconnected():
+    print('Trying to connect to WLAN')
+    time.sleep(0.5)
+print('Connect to WLAN success')
 
 # Variable to track the time of the last BLE read event
 last_read_event_time = time.time()
