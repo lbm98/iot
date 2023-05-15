@@ -73,19 +73,12 @@ def read_ble_characteristic(characteristic):
 def main():
     char = discover_ble_characteristic()
 
-    count = 0
     while True:
-        # Sometimes, the BLE channel fails,
-        if count % 5 == 0:
-            time.sleep(5.0)
-        else:
-            # Try to poll the BLE device for data
-            success = read_ble_characteristic(char)
-            if not success:
-                print('Failed to poll BLE device')
-            time.sleep(CONNECTION_INTERVAL)
-
-        count += 1
+        # Try to poll the BLE device for data
+        success = read_ble_characteristic(char)
+        if not success:
+            print('Failed to poll BLE device')
+        time.sleep(CONNECTION_INTERVAL)
 
 
 if __name__ == '__main__':
