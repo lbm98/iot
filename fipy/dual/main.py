@@ -1,6 +1,7 @@
 from network import Bluetooth
 import pycom
 import time
+import usocket
 
 from SI7006A20 import SI7006A20
 from pycoproc_2 import Pycoproc
@@ -13,6 +14,9 @@ SERVICE_UUID = 0x1000
 
 # The characteristic of the service
 CHARACTERISTIC_UUID = 0x2000
+
+SERVER = '192.168.1.36'  # Replace with the server's IP address (coral)
+PORT = 8090  # Replace with the server's IP port (coral)
 
 # Disable heartbeat LED to save power
 pycom.heartbeat(False)
@@ -42,7 +46,32 @@ def chr1_cb_handler(chr, data):
 
     last_read_event_time = time.time()
 
+def use_wifi():
+    # Create a socket object with options:
+    # - socket.AF_INET: For use with Internet protocols (WiFi, LTE, Ethernet)
+    # - socket.SOCK_STREAM: Creates a stream socket (INET socket only, UDP protocol only)
+    #
+    # We use UDP, rather than TCP, to reduce network overhead.
+    sock = usocket.socket(usocket.AF_INET, usocket.SOCK_STREAM)
 
+    # Connect to the server
+    try:
+        sock.connect((SERVER, PORT))
+
+        print('Connected to server')
+
+        # Construct a message containing the humidity
+        message = str(dht.humidity())
+
+        sock.send(message.encode())
+
+        print('Message sent')
+    except OSError as e:
+        sock.close()
+        raise
+
+    # Close the connection to the server
+    sock.close()
 
 bluetooth = Bluetooth()
 bluetooth.set_advertisement(name='FiPy 45', manufacturer_data="Pycom", service_uuid=SERVICE_UUID)
@@ -59,7 +88,8 @@ print('BLE service started')
 
 while True:
     if time.time() - last_read_event_time > CONNECTION_INTERVAL + 0.3:
-        print("use IP")
+        print("use WIFI")
+        use_wifi()
         last_read_event_time = time.time()
 
     time.sleep(0.1)

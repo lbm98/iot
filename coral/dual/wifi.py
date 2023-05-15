@@ -12,8 +12,8 @@ from datetime import datetime
 
 # We want to create a server on the device running this script
 # Here, we define the parameters of this server
-HOST = ''  # The IP address of the device itself, so leave empty
-PORT = 8090  # The port of the application
+HOST = '192.168.1.36'  # The IP address of the ethernet interface
+PORT = 8090  # The IP port of the application
 
 # Store data received from clients
 buffer = []
