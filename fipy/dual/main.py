@@ -60,7 +60,7 @@ print('BLE service started')
 while True:
     if time.time() - last_read_event_time > CONNECTION_INTERVAL + 0.3:
         print("use IP")
-        break
+        last_read_event_time = time.time()
 
     time.sleep(0.1)
 

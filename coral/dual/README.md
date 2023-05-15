@@ -10,6 +10,17 @@ venv/bin/pip install -r requirements.txt
 
 ### Run
 
+Start the IP server as a background process
+```bash
+venv/bin/python wifi.py &
+```
+
+Close the IP server
+```bash
+pkill -f "venv/bin/python wifi.py"
+```
+
+Run the main script
 ```bash
 sudo venv/bin/python main.py
 ```
