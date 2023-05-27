@@ -77,7 +77,7 @@ def use_wifi():
         # Construct a message with format: CSV humidity, temperature
         humidity = str(dht.humidity())
         temperature = str(dht.temperature())
-        message = f'{humidity},{temperature}'
+        message = humidity + ',' + temperature
 
         sock.send(message.encode())
 
