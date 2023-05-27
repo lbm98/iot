@@ -74,12 +74,14 @@ def use_wifi():
 
         print('Connected to server')
 
-        # Construct a message containing the humidity
+        # Construct a message with format: CSV humidity, temperature
         humidity = str(dht.humidity())
+        temperature = str(dht.temperature())
+        message = f'{humidity},{temperature}'
 
-        sock.send(humidity.encode())
+        sock.send(message.encode())
 
-        print("WIFI transmitted :", humidity)
+        print("WIFI transmitted :", message)
     except OSError as e:
         sock.close()
         raise
